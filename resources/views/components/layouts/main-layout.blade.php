@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $pageTitle }}</title>
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
+</head>
+
+<body style="margin: 0;">
+
+    @auth
+        <x-sidebar /> {{-- substitui o <x-user-bar /> --}}
+    @endauth
+
+    <div id="main-content" style="min-height: 100vh; background: #f9f9f9; margin-left: 240px;">
+    <style>
+        @media (max-width: 767px) {
+            #main-content {
+                margin-left: 0 !important;
+                padding-top: 56px;
+            }
+        }
+        
+            </style>
+            {{ $slot }}
+    </div>
+
+    <script src="{{ asset('assets/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    @auth
+        @viteReactRefresh
+        @vite(['resources/css/app.css', 'resources/js/sidebar.jsx']) 
+    @endauth
+    @stack('scripts')
+</body>
+
+</html>
